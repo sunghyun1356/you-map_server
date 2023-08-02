@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.core.exceptions import ValidationError
-from rest_framework import generics, status
+from rest_framework import generics, status, viewsets
 from rest_framework.response import Response
 
 from .models import Post
 from .serializers import PopularFirstBuildingPurposeSerializer, RecentFirstBuildingPurposeSerializer
+from .serializers import PostSerializer, PostDetailSerializer, PostListSerializer
 
 from buildings.models import Purpose
 
@@ -45,3 +46,29 @@ class PurposeListView(generics.ListAPIView):
             return super().get(request, *args, **kwargs)
         except ValidationError as e:
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
+
+#post 목록
+class PostListCreateAPIView(generics.ListAPIView, generics.CreateAPIView):
+    
+    def get_serializer_class(self):
+        # if (self.request.method == 'POST'):
+        #     return PostSerializer
+        return PostListSerializer
+    
+    def get_queryset(self):
+        # if (self.request.method == 'POST'):
+        #     posts = Post.objects.all()
+        #     return posts
+        purposes = Purpose.objects.all()
+        return purposes
+
+
+#post 조회, 수정, 삭제 -> 권한 설정하기
+class PostDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset= Post.objects.all()
+    # writer - 조회 시에 writer 어디까지 주나?
+    def get_serializer_class(self):
+        if (self.request.method == 'GET'):
+            return PostDetailSerializer
+        return PostSerializer
+
