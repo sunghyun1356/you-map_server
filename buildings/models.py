@@ -18,10 +18,10 @@ class Purpose(models.Model):
     
 class BuildingPurpose(models.Model):
     building = models.ForeignKey(to ='Building', on_delete=models.CASCADE)
-    purpose = models.ForeignKey(to ='Purpose', on_delete=models.CASCADE)
+    purpose = models.ForeignKey(to ='Purpose', related_name='purposes', on_delete=models.CASCADE)
     
 class Location(models.Model):
-    building = models.ForeignKey(to ='Building', on_delete=models.CASCADE)
+    building = models.ForeignKey(to ='Building', related_name='locations', on_delete=models.CASCADE)
     floor = models.IntegerField(default = 0)
 
     def __str__(self):
