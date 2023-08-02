@@ -19,7 +19,7 @@ class BuildingSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'nickname', 'latitude', 'longitude', 'purposes', 'locations']
     
     def get_purposes_queryset(self, building):
-        purposes= BuildingPurpose.objects.filter(building=building)
+        purposes= BuildingPurpose.objects.select_related('building').all()
         return purposes
     def get_purposes(self, building):
         queryset = self.get_purposes_queryset(building)
@@ -30,9 +30,4 @@ class BuildingSerializer(serializers.ModelSerializer):
 
 
     
-# class PurposeLocationSerializer(BuildingSerializer):
-#     locations = serializers.StringRelatedField(many=True)
-#     class Meta:
-#         model = Building
-#         fields = [ 'id', 'purposes',  'locations']
 

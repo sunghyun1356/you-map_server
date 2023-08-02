@@ -3,8 +3,8 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('', BuildingListAPIView.as_view({'get': 'list'})),
-    path('<int:pk>',BuildingListAPIView.as_view({'get':'retrieve'}) ),
+    path('', BuildingAPIViewSet.as_view({'get': 'list'})),
+    path('<int:pk>',BuildingAPIViewSet.as_view({'get':'retrieve'}) ),
 
     
 ]
