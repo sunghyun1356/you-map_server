@@ -51,14 +51,19 @@ class RecentFirstBuildingPurposeSerializer(LimitMixin, BuildingPurposeSerializer
 # post 상세 조회
 class PostDetailSerializer(serializers.ModelSerializer):
     location = serializers.StringRelatedField()
-    writer = serializers.SerializerMethodField()   
+    writer = serializers.SerializerMethodField()  
+    '''
+        user구현되면 수정
+        writer = WriterSerilzer
+    '''
+    def get_writer(self, obj):
+        return obj.writer.username
+        
     class Meta:
         model = Post
         fields = '__all__'
-        # read_only_fields = ['created_at', 'updated_at', 'likes', 'writer']
         depth = 1
-    def get_writer(self, obj):
-        return obj.writer.username
+
     
 # post 수정, 삭제 
 class PostSerializer(serializers.ModelSerializer):
