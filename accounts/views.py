@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.core.validators import validate_email
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from rest_framework import status
 
 import random
 
@@ -85,4 +86,4 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     messages.info(request, '로그아웃 되었습니다.')
-    return redirect('login')
+    return JsonResponse({"message" : "Logout Success!"},status=status.HTTP_201_CREATED)
