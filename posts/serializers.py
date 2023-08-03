@@ -57,7 +57,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
         writer = WriterSerilzer
     '''
     def get_writer(self, obj):
-        return obj.writer.username
+        return obj.writer.nickname
         
     class Meta:
         model = Post
