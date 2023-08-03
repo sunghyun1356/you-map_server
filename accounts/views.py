@@ -7,7 +7,12 @@ from django.core.validators import validate_email
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from rest_framework import status
-
+from rest_framework.views import APIView
+from .serializers import *
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from django.views.decorators.csrf import csrf_exempt
 import random
 
 from .models import validate_email_domain
@@ -67,7 +72,7 @@ def verify_email(request):
             return JsonResponse({'message': 'Invalid verification code'}, status=400)
     else:
         return JsonResponse({'message': 'Invalid request method'}, status=400)
-
+@csrf_exempt
 def login_view(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -76,7 +81,7 @@ def login_view(request):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
-            return redirect('dashboard')
+            return JsonResponse({'message': "Login Success!"})
         else:
             messages.error(request, '이메일이나 비밀번호가 잘못되었습니다.')
             return redirect('login')
@@ -87,3 +92,30 @@ def logout_view(request):
     logout(request)
     messages.info(request, '로그아웃 되었습니다.')
     return JsonResponse({"message" : "Logout Success!"},status=status.HTTP_201_CREATED)
+
+
+class RegisterAPIView(APIView):
+    permission_classes = [AllowAny]
+    def post(self, request):
+        serializers = UserBaseSerializer(data=request.data)
+        if serializers.is_valid():
+            user = serializers.save()
+            token = TokenObtainPairSerializer.get_token(user)
+            refresh_token=str(token)
+            access_token = str(token.access_token)
+            res = Response(
+                {
+                    "user" : serializers.data,
+                    "message" : "signup success",
+                    "token" : {
+                        "access" : access_token,
+                        "refresh" : refresh_token,
+                    },
+                },
+                status=status.HTTP_200_OK,
+            )
+            res.set_cookie("access", access_token, httponly=True)
+            res.set_cookie("refresh", refresh_token, httponly=True)
+
+            return res
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)

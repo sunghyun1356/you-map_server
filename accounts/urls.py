@@ -7,4 +7,5 @@ urlpatterns = [
     path('verify_email/', verify_email, name='verify_email'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
+    path('jwtsignup/', RegisterAPIView.as_view(), name='jwt_signup'),
 ]
