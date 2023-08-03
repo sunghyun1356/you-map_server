@@ -48,26 +48,20 @@ class PurposeListView(generics.ListAPIView):
         except ValidationError as e:
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
 
-#post 목록
-class PostListCreateAPIView(generics.ListCreateAPIView):
-    
-    def get_serializer_class(self):
-        
-        if (self.request.method == 'POST'):
-            return PostSerializer
-        return PostListSerializer
-    
-    def get_queryset(self):
-        if (self.request.method == 'POST'):
-            posts = Post.objects.all()
-            return posts
-        purposes = Purpose.objects.all()
-        return purposes
+#post 전체 목록
+class PostListAPIView(generics.ListCreateAPIView):
+    queryset = Purpose.objects.all()
+    serializer_class = PostListSerializer
+
+#post 생성
+class PostCreateAPIView(generics.CreateAPIView):
+    queryset= Post.objects.all()
+    serializer_class = PostSerializer
 
     def perform_create(self, serializer):
         serializer.save(writer=self.request.user)
 
-#post 조회, 수정, 삭제 -> 권한 설정하기
+#post 조회, 수정, 삭제 -> todo: 권한 설정하기
 class PostDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= Post.objects.all()
 
@@ -76,3 +70,6 @@ class PostDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
             return PostDetailSerializer
         return PostSerializer
 
+# purpose별 최신 posts 목록 - pagination
+
+# 지금 가장 인기 있는 장소

@@ -52,15 +52,15 @@ class RecentFirstBuildingPurposeSerializer(LimitMixin, BuildingPurposeSerializer
 # post 상세 조회
 class PostDetailSerializer(serializers.ModelSerializer):
     location = serializers.StringRelatedField()
-    writer = WriterSerializer()
-        
+    writer = WriterSerializer(read_only=True)
+
     class Meta:
         model = Post
         fields = '__all__'
         depth = 1
 
     
-# post 수정, 삭제 
+# post 생성, 수정, 삭제 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
