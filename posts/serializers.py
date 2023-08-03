@@ -3,6 +3,7 @@ from rest_framework import serializers, pagination
 from .models import Post, Comment
 
 from buildings.models import Location, Purpose
+from accounts.serializers import WriterSerializer
 
 class PostPreviewSerializer(serializers.ModelSerializer):
     location = serializers.StringRelatedField()
@@ -51,13 +52,7 @@ class RecentFirstBuildingPurposeSerializer(LimitMixin, BuildingPurposeSerializer
 # post 상세 조회
 class PostDetailSerializer(serializers.ModelSerializer):
     location = serializers.StringRelatedField()
-    writer = serializers.SerializerMethodField()  
-    '''
-        user구현되면 수정
-        writer = WriterSerilzer
-    '''
-    def get_writer(self, obj):
-        return obj.writer.nickname
+    writer = WriterSerializer()
         
     class Meta:
         model = Post
