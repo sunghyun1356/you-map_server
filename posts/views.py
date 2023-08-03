@@ -1,14 +1,16 @@
 from django.shortcuts import render
 from django.core.exceptions import ValidationError
-from rest_framework import generics, status, viewsets
+from django.utils.decorators import method_decorator
+from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
-
+from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS, AllowAny
 from .models import Post
 from .serializers import PopularFirstBuildingPurposeSerializer, RecentFirstBuildingPurposeSerializer
 from .serializers import PostSerializer, PostDetailSerializer, PostListSerializer
+from .permissions import IsOwnerOrReadOnly
 
 from buildings.models import Purpose
+
 
 class PurposeListView(generics.ListAPIView):
     def get_serializer_class(self):
@@ -48,31 +50,37 @@ class PurposeListView(generics.ListAPIView):
         except ValidationError as e:
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
 
-#post 목록
-class PostListCreateAPIView(generics.ListCreateAPIView):
-    
-    def get_serializer_class(self):
-        
-        if (self.request.method == 'POST'):
-            return PostSerializer
-        return PostListSerializer
-    
-    def get_queryset(self):
-        if (self.request.method == 'POST'):
-            posts = Post.objects.all()
-            return posts
-        purposes = Purpose.objects.all()
-        return purposes
+#post 전체 목록
+class PostListAPIView(generics.ListAPIView):
+    queryset = Purpose.objects.all()
+    serializer_class = PostListSerializer
 
+#post 생성
+class PostCreateAPIView(generics.CreateAPIView):
+    queryset= Post.objects.all()
+    serializer_class = PostSerializer
+    
     def perform_create(self, serializer):
         serializer.save(writer=self.request.user)
 
-#post 조회, 수정, 삭제 -> 권한 설정하기
+# url 
+def postListCreateCombined(request, *args, **kwargs):
+    if request.method == 'GET':
+        return PostListAPIView.as_view()(request, *args, **kwargs)
+    elif request.method == 'POST':
+        return PostCreateAPIView.as_view()(request, *args, **kwargs)
+
+
+#post 조회, 수정, 삭제
 class PostDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset= Post.objects.all()
-
+    permission_classes = [IsOwnerOrReadOnly]
+    
     def get_serializer_class(self):
         if (self.request.method == 'GET'):
             return PostDetailSerializer
         return PostSerializer
 
+# purpose별 최신 posts 목록 - pagination
+
+# 지금 가장 인기 있는 장소

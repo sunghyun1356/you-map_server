@@ -9,7 +9,13 @@ djangorestframework = "*"
 python-dotenv = "*"
 django-cors-headers = "*"
 pillow = "*"
+<<<<<<< HEAD
 djangorestframework-simplejwt = "*"
+=======
+gunicorn = "*"
+whitenoise = "*"
+django-environ = "*"
+>>>>>>> 9e63ae44e91e24eace08d395f5eedc6fbc5aefce
 
 [dev-packages]
 
