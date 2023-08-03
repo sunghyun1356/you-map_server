@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers, pagination
 
 from .models import Post, Comment
 
@@ -70,6 +70,7 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ['title', 'content', 'purpose', 'location', 'image']
+
 
 #purpose별 post 목록
 class PostListSerializer(BasePurposeSerializer):

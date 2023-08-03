@@ -52,6 +52,7 @@ class PurposeListView(generics.ListAPIView):
 class PostListCreateAPIView(generics.ListCreateAPIView):
     
     def get_serializer_class(self):
+        
         if (self.request.method == 'POST'):
             return PostSerializer
         return PostListSerializer
@@ -64,7 +65,7 @@ class PostListCreateAPIView(generics.ListCreateAPIView):
         return purposes
 
     def perform_create(self, serializer):
-        serializer.save(writer = self.request.nickname)
+        serializer.save(writer=self.request.user)
 
 #post 조회, 수정, 삭제 -> 권한 설정하기
 class PostDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
