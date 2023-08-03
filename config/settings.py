@@ -40,8 +40,12 @@ SECRET_KEY = get_env_variable('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://port-0-you-map-3prof2llkumhr4n.sel4.cloudtype.app/']
 
+DJANGO_SUPERUSER_PASSWORD = 'admin1234'
+DJANGO_SUPERUSER_EMAIL = 'admin@sogang.ac.kr'
+DJANGO_SUPERUSER_USERNAME = 'admin'
+DJANGO_SUPERUSER_NICKNAME='ad'
 
 # Application definition
 
