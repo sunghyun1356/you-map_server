@@ -639,7 +639,7 @@ class Command(BaseCommand):
             
             
             
-                ]
+    ]
     def handle(self, *args, **options):
         for building in self.Buildings:
             Building.objects.get_or_create(

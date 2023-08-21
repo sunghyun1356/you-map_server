@@ -12,12 +12,12 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     # 서버에서 클라이언트로의 응답(response)에는 포함되지 않게 된다.
     class Meta:
         model = MyUser
-        fields = ('id', 'username', 'password','email', 'is_staff')
+        fields = ('id', 'name','nickname', 'password','email', 'is_staff')
 
     def create(self, validated_data):
 
         user = MyUser.objects.create_user(
-            username=validated_data['username'],
+            name=validated_data['name'],
             password=validated_data['password'],
             email = validate_email['email'],
         )
