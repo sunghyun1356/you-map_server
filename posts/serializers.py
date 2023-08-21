@@ -3,7 +3,7 @@ from rest_framework import serializers, pagination
 from .models import Post, Comment
 
 from buildings.models import Location, Purpose
-from accounts.serializers import UserRegisterSerializer
+from accounts.serializers import UserPreviewSerializer, UserRegisterSerializer
 
 class PostPreviewSerializer(serializers.ModelSerializer):
     location = serializers.StringRelatedField()
@@ -52,7 +52,7 @@ class RecentFirstBuildingPurposeSerializer(LimitMixin, BuildingPurposeSerializer
 # post 상세 조회
 class PostDetailSerializer(serializers.ModelSerializer):
     location = serializers.StringRelatedField()
-    writer = UserRegisterSerializer(read_only=True)
+    writer = UserPreviewSerializer()
 
     class Meta:
         model = Post

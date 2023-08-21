@@ -8,7 +8,7 @@ from .pagination import RecentFirstCursorPagination, PopularFirstCursorPaginatio
 from buildings.models import Location
 
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 class PostListAPIViewBase(generics.ListAPIView):
     serializer_class = PostSerializer

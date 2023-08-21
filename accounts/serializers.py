@@ -22,3 +22,9 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             email = validate_email['email'],
         )
         return user
+    
+class UserPreviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MyUser
+        fields = ('nickname', )
+    
