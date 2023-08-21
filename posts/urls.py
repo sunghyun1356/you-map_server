@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path
 
 from . import views
+from likes import views as like_views
 
 urlpatterns = [
     path('popular/', views.PurposeListView.as_view(), kwargs={'ordering': 'popular'}), 
