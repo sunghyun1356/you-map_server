@@ -301,23 +301,23 @@ class Command(BaseCommand):
             'purpose' : 5 # 기타
         },
         {
-            'building' : 8. # '성이냐시오관'
+            'building' : 8, # '성이냐시오관'
             'purpose' : 1 # 휴게
         },
         {
-            'building' : 8. # '성이냐시오관'
+            'building' : 8, # '성이냐시오관'
             'purpose' : 2 # 공부
         },
         {
-            'building' : 8. # '성이냐시오관'
+            'building' : 8, # '성이냐시오관'
             'purpose' : 3 # 팀플
         },
         {
-            'building' : 8. # '성이냐시오관'
+            'building' : 8, # '성이냐시오관'
             'purpose' : 4 # 경로
         },
         {
-            'building' : 8. # '성이냐시오관'
+            'building' : 8, # '성이냐시오관'
             'purpose' : 5 # 기타
         },
         {
