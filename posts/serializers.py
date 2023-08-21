@@ -67,7 +67,7 @@ class PostSerializer(serializers.ModelSerializer):
         fields = ['title', 'content', 'purpose', 'location', 'image']
 
 
-#purpose별 post 목록
+
 class PostListSerializer(BasePurposeSerializer):
     posts = serializers.SerializerMethodField()
     def get_posts_queryset(self, purpose):
@@ -77,3 +77,4 @@ class PostListSerializer(BasePurposeSerializer):
         queryset = self.get_posts_queryset(purpose).order_by('-created_at')
         return PostPreviewSerializer(queryset, many=True).data
     
+#purpose별 post 목록
