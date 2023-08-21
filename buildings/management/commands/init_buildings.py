@@ -301,15 +301,15 @@ class Command(BaseCommand):
             'purpose' : 5 # 기타
         },
         {
-            'building' : 8. # '성이냐시오관'
+            'building' : 8, # '성이냐시오관'
             'purpose' : 1 # 휴게
         },
         {
-            'building' : 8. # '성이냐시오관'
+            'building' : 8, # '성이냐시오관'
             'purpose' : 2 # 공부
         },
         {
-            'building' : 8. # '성이냐시오관'
+            'building' : 8, # '성이냐시오관'
             'purpose' : 3 # 팀플
         },
         {
@@ -639,7 +639,7 @@ class Command(BaseCommand):
             
             
             
-                ]
+    ]
     def handle(self, *args, **options):
         for building in self.Buildings:
             Building.objects.get_or_create(
