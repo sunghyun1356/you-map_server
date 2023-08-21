@@ -183,8 +183,463 @@ class Command(BaseCommand):
         {
             'building' : 1, # 본관
             'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 1, # 본관
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 1, # 본관
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 2, # 게페르트 남덕우 경제관
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 2, # 게페르트 남덕우 경제관
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 2, # 게페르트 남덕우 경제관
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 2, # 게페르트 남덕우 경제관
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 2, # 게페르트 남덕우 경제관
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 3, # 삼성 가브리엘관
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 3, # 삼성 가브리엘관
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 3, # 삼성 가브리엘관
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 3, # 삼성 가브리엘관
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 3, # 삼성 가브리엘관
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 4, # 금호아시아나 바오로 경영관
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 4, # 금호아시아나 바오로 경영관
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 4, # 금호아시아나 바오로 경영관
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 4, # 금호아시아나 바오로 경영관
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 4, # 금호아시아나 바오로 경영관
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 5, # '토마스 모어관'
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 5, # '토마스 모어관'
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 5, # '토마스 모어관'
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 5, # '토마스 모어관'
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 5, # '토마스 모어관'
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 6, # '마태오관'
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 6, # '마태오관'
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 6, # '마태오관'
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 6, # '마태오관'
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 6, # '마태오관'
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 7, # '메리홀'
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 7, # '메리홀'
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 8. # '성이냐시오관'
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 8. # '성이냐시오관'
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 8. # '성이냐시오관'
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 8. # '성이냐시오관'
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 8. # '성이냐시오관'
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 9, # '엠마오관'
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 9, # '엠마오관'
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 9, # '엠마오관'
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 9, # '엠마오관'
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 9, # '엠마오관'
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 10, # '로욜라 도서관'
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 10, # '로욜라 도서관'
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 10, # '로욜라 도서관'
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 10, # '로욜라 도서관'
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 10, # '로욜라 도서관'
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 11, #최양업관
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 11, #최양업관
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 11, #최양업관
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 11, #최양업관
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 11, #최양업관
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 12, # 다산관
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 12, # 다산관
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 12, # 다산관
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 12, # 다산관
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 12, # 다산관
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 13, # '곤자가 플라자'
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 13, # '곤자가 플라자'
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 13, # '곤자가 플라자'
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 14, # 떼이야르관
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 14, # 떼이야르관
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 14, # 떼이야르관
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 14, # 떼이야르관
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 14, # 떼이야르관
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 15, # 정하상관
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 15, # 정하상관
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 15, # 정하상관
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 15, # 정하상관
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 15, # 정하상관
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 16, # '포스코 프란치스코관'
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 16, # '포스코 프란치스코관'
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 16, # '포스코 프란치스코관'
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 16, # '포스코 프란치스코관'
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 16, # '포스코 프란치스코관'
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 17, # 리치별관
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 17, # 리치별관
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 17, # 리치별관
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 17, # 리치별관
+            'purpose' : 5 # 기타
+        },{
+            'building' : 18, # 아담샬관
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 18, # 아담샬관
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 18, # 아담샬관
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 18, # 아담샬관
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 18, # 아담샬관
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 19, # 리치과학관
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 19, # 리치과학관
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 19, # 리치과학관
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 19, # 리치과학관
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 20, # 김대건관
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 20, # 김대건관
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 20, # 김대건관
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 20, # 김대건관
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 20, # 김대건관
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 21, # 벨라르미노학사
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 21, # 벨라르미노학사
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 21, # 벨라르미노학사
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 21, # 벨라르미노학사
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 21, # 벨라르미노학사
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 22, # 서강빌딩
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 22, # 서강빌딩
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 22, # 서강빌딩
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 22, # 서강빌딩
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 22, # 서강빌딩
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 23, # 아루페관
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 23, # 아루페관
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 23, # 아루페관
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 23, # 아루페관
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 23, # 아루페관
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 24, # 체육관
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 24, # 체육관
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 24, # 체육관
+            'purpose' : 5 # 기타
+        },
+        {
+            'building' : 25, # 베르크만스 우정원
+            'purpose' : 1 # 휴게
+        },
+        {
+            'building' : 25, # 베르크만스 우정원
+            'purpose' : 2 # 공부
+        },
+        {
+            'building' : 25, # 베르크만스 우정원
+            'purpose' : 3 # 팀플
+        },
+        {
+            'building' : 25, # 베르크만스 우정원
+            'purpose' : 4 # 경로
+        },
+        {
+            'building' : 25, # 베르크만스 우정원
+            'purpose' : 5 # 기타
         }
-    ]
+
+            
+            
+            
+                ]
      
     def handle(self, *args, **options):
         for building in self.Buildings:
