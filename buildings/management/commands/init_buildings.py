@@ -178,7 +178,7 @@ class Command(BaseCommand):
             'glyph': None,
         },
     ]
-   
+
     BuidlingPurposes = [
         {
             'building' : 1, # 본관
@@ -640,7 +640,6 @@ class Command(BaseCommand):
             
             
                 ]
-     
     def handle(self, *args, **options):
         for building in self.Buildings:
             Building.objects.get_or_create(
