@@ -18,6 +18,8 @@ from datetime import timedelta
 from django.core.exceptions import ImproperlyConfigured
 import os
 
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,28 +27,32 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-load_dotenv()
 # SECURITY WARNING: keep the secret key used in production secret!
 
-def get_env_variable(var_name):
-    try:
-        return os.environ[var_name]
-    except KeyError:
-        error_msg = 'Set the {} environment variable'.format(var_name)
-    raise ImproperlyConfigured(error_msg)
-
-SECRET_KEY = get_env_variable('SECRET_KEY')
-# SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'http://127.0.0.1:8000',
+    '127.0.0.1',
+    # 배포된 백엔드 주소 추가하기
+]
 
-DJANGO_SUPERUSER_PASSWORD = 'admin1234'
-DJANGO_SUPERUSER_EMAIL = 'admin@sogang.ac.kr'
-DJANGO_SUPERUSER_USERNAME = 'admin'
-DJANGO_SUPERUSER_NICKNAME='ad'
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
+    # 배포된 백엔드 주소, 프론트엔드 주소 추가하기
+]
+
+# CSRF 설정
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
+    # 배포된 백엔드 주소 추가하기
+]
 
 # Application definition
 
@@ -57,8 +63,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    #DRF, CORS
     'rest_framework',
     'corsheaders',
+    
+    # 애플리케이션
     'posts',
     'accounts',
     'likes',
@@ -80,14 +90,9 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
 ]
+
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-]
-CSRF_TRUSTED_ORIGINS =[
-    'http://127.0.0.1:8000',
-]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -167,7 +172,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -227,3 +234,4 @@ EMAIL_HOST_USER = 'soganglikelionverify@gmail.com'  #인증 이메일 발신자
 EMAIL_HOST_PASSWORD = 'rxzsuxbjjqqgidhr'  #발신자 이메일 앱 비밀번호
 
 AUTH_USER_MODEL = 'accounts.MyUser'
+
