@@ -10,5 +10,7 @@ urlpatterns = [
 
     path('', views.PostListAPIView.as_view()),
     path('create/',views.PostCreateAPIView.as_view()),
+
+
     # path('', views.PostCreateAPIView.as_view()),
 ]
