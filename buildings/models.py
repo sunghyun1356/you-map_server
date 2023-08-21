@@ -2,7 +2,7 @@ from django.db import models
 
 class Building(models.Model):
     name = models.CharField(max_length=20)
-    nickname = models.CharField(max_length=20)
+    nickname = models.CharField(max_length=20, null=True, blank=True)
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
     
@@ -18,7 +18,7 @@ class Purpose(models.Model):
     
 class BuildingPurpose(models.Model):
     building = models.ForeignKey(to ='Building', on_delete=models.CASCADE)
-    purpose = models.ForeignKey(to ='Purpose', related_name='purposes', on_delete=models.CASCADE)
+    purpose = models.ForeignKey(to ='Purpose', related_name='buildingpurposes', on_delete=models.CASCADE)
     
 class Location(models.Model):
     building = models.ForeignKey(to ='Building', related_name='locations', on_delete=models.CASCADE)
