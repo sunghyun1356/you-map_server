@@ -38,6 +38,7 @@ ALLOWED_HOSTS = [
     'http://127.0.0.1:8000',
     '127.0.0.1',
     # 배포된 백엔드 주소 추가하기
+    'port-0-youmap-3prof2llkumhr4n.sel4.cloudtype.app',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -45,6 +46,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:8000",
     # 배포된 백엔드 주소, 프론트엔드 주소 추가하기
+    'https://port-0-youmap-3prof2llkumhr4n.sel4.cloudtype.app',
 ]
 
 # CSRF 설정
@@ -52,6 +54,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:8000",
     # 배포된 백엔드 주소 추가하기
+    'https://port-0-youmap-3prof2llkumhr4n.sel4.cloudtype.app'
 ]
 
 # Application definition
