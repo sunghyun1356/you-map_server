@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.utils.decorators import method_decorator
 from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS, AllowAny
+from rest_framework.permissions import BasePermission, IsAuthenticated, AllowAny
 from .models import Post
 from .serializers import PopularFirstBuildingPurposeSerializer, RecentFirstBuildingPurposeSerializer
 from .serializers import PostSerializer, PostDetailSerializer, PostListSerializer
@@ -47,26 +47,14 @@ class PurposeListView(generics.ListAPIView):
         paginator.page_size = int(self.request.query_params.get('pageSize', 10))
         return paginator.get_paginated_response(data)
 
-#post 전체 목록
-class PostListAPIView(generics.ListAPIView):
-    queryset = Purpose.objects.all()
-    serializer_class = PostListSerializer
-
 #post 생성
 class PostCreateAPIView(generics.CreateAPIView):
     queryset= Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
     
     def perform_create(self, serializer):
         serializer.save(writer=self.request.user)
-
-# url 
-def postListCreateCombined(request, *args, **kwargs):
-    if request.method == 'GET':
-        return PostListAPIView.as_view()(request, *args, **kwargs)
-    elif request.method == 'POST':
-        return PostCreateAPIView.as_view()(request, *args, **kwargs)
-
 
 #post 조회, 수정, 삭제
 class PostDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
@@ -77,5 +65,3 @@ class PostDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
         if (self.request.method == 'GET'):
             return PostDetailSerializer
         return PostSerializer
-
-# purpose별 최신 posts 목록 - pagination
