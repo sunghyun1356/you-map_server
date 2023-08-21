@@ -25,6 +25,7 @@ urlpatterns = [
     path('buildings/', include('buildings.urls')),
     path('posts/', include('posts.urls')),
     path('user/', include('accounts.urls')),
+    path('likes/', include('likes.urls')),
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root':settings.MEDIA_ROOT}),
 ]
 
