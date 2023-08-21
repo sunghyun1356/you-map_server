@@ -657,7 +657,7 @@ class Command(BaseCommand):
         
         for bp in self.BuidlingPurposes:
             BuildingPurpose.objects.get_or_create(
-                building = Building.objects.get(id = bp['building'])
+                building = Building.objects.get(id = bp['building']),
                 purpose = Purpose.objects.get(id = bp['purpose'])
             )
                         
