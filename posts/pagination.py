@@ -5,7 +5,7 @@ class CustomCursorPagination(CursorPagination):
     max_page_size = 100
 
 class RecentFirstCursorPagination(CustomCursorPagination):
-    ordering = '-updated_at'
+    ordering = '-created_at'
 
 class PopularFirstCursorPagination(CustomCursorPagination):
     ordering = '-likes'
