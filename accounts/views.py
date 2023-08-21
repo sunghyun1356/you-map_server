@@ -9,11 +9,13 @@ from django.contrib import messages
 from rest_framework import status
 from rest_framework.views import APIView
 from .serializers import *
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.views.decorators.csrf import csrf_exempt
 import random
+from rest_framework import generics
+from .serializers import *
 
 from .models import validate_email_domain
 from .models import MyUser
@@ -56,7 +58,7 @@ def signup_view(request):
         return JsonResponse({'message': 'Invalid credentials'}, status=400)
     else:
         return JsonResponse({'message': 'Invalid request method'}, status=400)
-
+@csrf_exempt
 def verify_email(request):
     if request.method == 'POST':
         data = request.POST
@@ -72,6 +74,7 @@ def verify_email(request):
             return JsonResponse({'message': 'Invalid verification code'}, status=400)
     else:
         return JsonResponse({'message': 'Invalid request method'}, status=400)
+
 @csrf_exempt
 def login_view(request):
     if request.method == 'POST':
@@ -93,29 +96,10 @@ def logout_view(request):
     messages.info(request, '로그아웃 되었습니다.')
     return JsonResponse({"message" : "Logout Success!"},status=status.HTTP_201_CREATED)
 
+class UserRegisterAPIView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserRegisterSerializer
 
-class RegisterAPIView(APIView):
-    permission_classes = [AllowAny]
-    def post(self, request):
-        serializers = UserBaseSerializer(data=request.data)
-        if serializers.is_valid():
-            user = serializers.save()
-            token = TokenObtainPairSerializer.get_token(user)
-            refresh_token=str(token)
-            access_token = str(token.access_token)
-            res = Response(
-                {
-                    "user" : serializers.data,
-                    "message" : "signup success",
-                    "token" : {
-                        "access" : access_token,
-                        "refresh" : refresh_token,
-                    },
-                },
-                status=status.HTTP_200_OK,
-            )
-            res.set_cookie("access", access_token, httponly=True)
-            res.set_cookie("refresh", refresh_token, httponly=True)
 
-            return res
-        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+class CustomTokenOBtainPairAPIView(TokenObtainPairView):
+    pass

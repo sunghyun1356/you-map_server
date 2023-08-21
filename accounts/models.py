@@ -37,6 +37,7 @@ class MyUserManager(BaseUserManager):
 class MyUser(AbstractBaseUser,PermissionsMixin):
     email = models.EmailField(unique=True, validators=[validate_email_domain])
     name = models.CharField(max_length=100)
+    password = models.CharField(max_length=50, null=False)
     nickname = models.CharField(max_length=50)
     school = models.CharField(max_length=100)
     is_email_verified = models.BooleanField(default=False)
