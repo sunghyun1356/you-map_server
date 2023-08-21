@@ -1,51 +1,46 @@
-from django.shortcuts import render
 from django.core.exceptions import ValidationError
-from django.utils.decorators import method_decorator
-from rest_framework import generics, status
-from rest_framework.response import Response
-from rest_framework.permissions import BasePermission, IsAuthenticated, AllowAny
+
 from .models import Post
-from .serializers import PopularFirstBuildingPurposeSerializer, RecentFirstBuildingPurposeSerializer
-from .serializers import PostSerializer, PostDetailSerializer, PostListSerializer
+from .serializers import PostSerializer, PostDetailSerializer
 from .permissions import IsOwnerOrReadOnly
-from rest_framework.views import APIView
-from rest_framework.pagination import CursorPagination
+from .pagination import RecentFirstCursorPagination, PopularFirstCursorPagination
 
+from buildings.models import Location
 
-from buildings.models import Purpose
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
+class PostListAPIViewBase(generics.ListAPIView):
+    serializer_class = PostSerializer
 
-class PurposeListView(generics.ListAPIView):
-    serializer_class = RecentFirstBuildingPurposeSerializer  # 기본 시리얼라이저
+    def get_paginated_response(self, data):
+        return super().get_paginated_response(data)
 
-    def get_serializer_class(self):
-        ordering = self.request.query_params.get('ordering', 'recent')  # 기본값 'recent'
-        if ordering == 'recent':
-            return RecentFirstBuildingPurposeSerializer
-        return PopularFirstBuildingPurposeSerializer
-    
     def get_queryset(self):
         building_id = self.request.query_params.get('buildingId', None)
         purpose_id = self.request.query_params.get('purposeId', None)
-        page_size = self.request.query_params.get('pageSize', 10)  # 기본 페이지 크기 10으로 설정
+        page_size = self.request.query_params.get('pageSize', None)
 
-        if building_id is None:
-            raise ValidationError('Missing buildingId query parameter.')
-        if page_size is None:
-            raise ValidationError('Missing pageSize query parameter.')
-        if self.request.query_params.get('ordering') == 'recent' and purpose_id is None:
-            raise ValidationError('Missing purposeId query parameter')
+        if not (building_id and purpose_id and page_size):
+            raise ValidationError("buildingId, purposeId, and pageSize are required query parameters.")
 
-        queryset = Purpose.objects.filter(buildingpurpose__building_id=building_id)
-        if purpose_id is not None:
-            queryset = queryset.filter(id=purpose_id)
-        
+        try:
+            page_size = int(page_size)
+            if page_size <= 0:
+                raise ValidationError("pageSize must be greater than 0.")
+        except ValueError:
+            raise ValidationError("Invalid value for pageSize.")
+
+        location_ids = Location.objects.filter(building_id=building_id).values_list('id', flat=True)
+        queryset = Post.objects.filter(location_id__in=location_ids, purpose_id=purpose_id)
+
         return queryset
-    
-    def get_paginated_response(self, data):
-        paginator = CursorPagination()
-        paginator.page_size = int(self.request.query_params.get('pageSize', 10))
-        return paginator.get_paginated_response(data)
+
+class PopularFirstPostListAPIView(PostListAPIViewBase):
+    pagination_class = PopularFirstCursorPagination
+
+class RecentFirstPostListAPIView(PostListAPIViewBase):
+    pagination_class = RecentFirstCursorPagination
 
 #post 생성
 class PostCreateAPIView(generics.CreateAPIView):
