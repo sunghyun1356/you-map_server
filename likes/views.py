@@ -7,8 +7,10 @@ from posts.models import Post
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from django.http.response import Http404
+from django.db.models import F
 
-class LikeDetail(generics.RetrieveAPIView, generics.DestroyAPIView, generics.CreateAPIView):
+
+class LikeDetail(generics.RetrieveAPIView, generics.CreateAPIView):
     queryset = Like.objects.all()
     serializer_class = LikeSerializer
     permission_classes = [IsAuthenticated]
@@ -48,12 +50,18 @@ class LikeDetail(generics.RetrieveAPIView, generics.DestroyAPIView, generics.Cre
         Returns the object that satisfies the following conditions:
             1) the view is displaying
             2) the requested user is the 'user'
+
+        If user didn't like -> None
+        If permission denied -> 404
         """
 
         queryset = self.filter_queryset(self.get_queryset())
 
         filter_kwargs = self.get_filter_kwargs()
-        obj = get_object_or_404(queryset, **filter_kwargs)
+        try: 
+            obj = get_object_or_404(queryset, **filter_kwargs)
+        except Http404: 
+            return None
 
         # May raise a permission denied
         self.check_object_permissions(self.request, obj)
@@ -63,12 +71,16 @@ class LikeDetail(generics.RetrieveAPIView, generics.DestroyAPIView, generics.Cre
     def retrieve(self, request, *args, **kwargs):
         """
         Gives 200 if the requested user liked the post number
+        Gives 204 if the requested user didn't like the post number
         Else, gives 404
         """
 
-        # if didn't like, give 404
-        self.get_object()
-        return Response(data={'did_like': True}, status=status.HTTP_200_OK)
+        like_obj = self.get_object()
+        if like_obj is not None:
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        
     
     def create(self, request, *args, **kwargs):
         """
@@ -76,23 +88,22 @@ class LikeDetail(generics.RetrieveAPIView, generics.DestroyAPIView, generics.Cre
         Else, gives 409
         """
 
-        # if already liked, give 409
-        try: 
-            obj = self.get_object()
-            if obj is not None:
-                return Response(status=status.HTTP_409_CONFLICT)
-            
-        except Http404:
-            serializer = self.get_serializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            self.perform_create(serializer)
+        # if already liked, do DELETE
+        like_instance = self.get_object()
+        if like_instance is not None:
+            return self.destroy(request, *args, **kwargs)
+        
+        # if not liked yet, add like
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
 
-            post = self.get_filter_kwargs()['post']
-            post.likes += 1
-            post.save()
-            
-            headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        post = self.get_filter_kwargs()['post']
+        post.likes = F('likes') + 1
+        post.save()
+        
+        headers = self.get_success_headers(serializer.data)
+        return Response(status=status.HTTP_201_CREATED, headers=headers)
 
     def perform_create(self, serializer):
         filter_kwargs = self.get_filter_kwargs()
@@ -104,11 +115,11 @@ class LikeDetail(generics.RetrieveAPIView, generics.DestroyAPIView, generics.Cre
         Else, gives 404
         """
         
-        instance = self.get_object()
-        self.perform_destroy(instance)
+        like_instance = self.get_object()
+        like_instance.delete()
 
         post = self.get_filter_kwargs()['post']
-        post.likes -= 1
+        post.likes = F('likes') - 1
         post.save()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
