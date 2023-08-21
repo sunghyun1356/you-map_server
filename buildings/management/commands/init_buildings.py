@@ -203,7 +203,7 @@ class Command(BaseCommand):
             
         for buildingpurpose in self.BuidlingPurposes :
             BuildingPurpose.objects.get_or_create(
-                building = buildingpurpose['name'],
+                building = buildingpurpose['building'],
                 purpose = buildingpurpose['purpose']
             )
         self.stdout.write(self.style.SUCCESS('Buildings initialized'))
