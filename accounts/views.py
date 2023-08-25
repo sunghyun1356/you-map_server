@@ -20,6 +20,7 @@ from .serializers import *
 from .models import validate_email_domain
 from .models import MyUser
 
+import json
 User = get_user_model()
 
 def generate_verification_code():
@@ -27,7 +28,8 @@ def generate_verification_code():
 
 def signup_view(request):
     if request.method == 'POST':
-        data = request.POST
+        data = json.loads(request.body)
+
         email = data.get('email')
         password = data.get('password')
         name = data.get('name')
